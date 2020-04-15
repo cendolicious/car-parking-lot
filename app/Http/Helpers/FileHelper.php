@@ -5,6 +5,7 @@ namespace App\Http\Helpers;
 class FileHelper {
 
     const SPACE_FILE_PATH = 'app/space.json';
+    const PARKING_FILE_PATH = 'app/parking.json';
 
     public static function getFile($path, $parse = false){
         if (!file_exists($path))
@@ -30,6 +31,12 @@ class FileHelper {
             file_put_contents($path, json_encode($data));
             unset($data);
         }
+
+        return true;
+    }
+
+    public static function rewriteFile ($path, $content){
+        fwrite(fopen($path, 'w'), json_encode($content));
 
         return true;
     }

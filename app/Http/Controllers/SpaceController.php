@@ -44,7 +44,7 @@ class SpaceController extends Controller
             
             for ($i = $latestSpaceBlockNumber; $i < ($latestSpaceBlockNumber + $params['quantity']); $i++) { 
                 $params['number'] = $i;
-                $space = $this->createSpace($params);
+                $space = $this->createSpace($params['block'], $params['number']);
                 array_push($result, $space);
             }
         }
@@ -67,14 +67,17 @@ class SpaceController extends Controller
         try
         {
             $result = $this->findManySpace();
+            $result = collect($result)->sortBy('status')->sortBy('number')->sortBy('block');
+
             if (isset($params['status']) && !empty($params['status'])) {
-                $result = collect($result)->where('status', $params['status'])->toArray();
+                $result = $result->where('status', $params['status']);
             }
 
             if (isset($params['block']) && !empty($params['block'])) {
-                $result = collect($result)->where('block', $params['block'])->toArray();
+                $result = $result->where('block', $params['block']);
             }
             
+            $result = $result->toArray();
         }
         catch (Exception $ex)
         {
