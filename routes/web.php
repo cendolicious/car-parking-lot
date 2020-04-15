@@ -14,3 +14,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'space'], function () use ($router) {
+    $router->post('create', 'SpaceController@create');
+    $router->get('list', 'SpaceController@list');
+});
+
+$router->post('check-in', 'ParkingController@checkin');
+$router->post('check-out', 'ParkingController@checkout');
+$router->get('list', 'ParkingController@list');
+$router->get('report', 'ParkingController@report');
