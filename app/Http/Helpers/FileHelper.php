@@ -6,6 +6,7 @@ class FileHelper {
 
     const SPACE_FILE_PATH = 'app/space.json';
     const PARKING_FILE_PATH = 'app/parking.json';
+    const PRICE_FILE_PATH = 'app/price.json';
 
     public static function getFile($path, $parse = false){
         if (!file_exists($path))

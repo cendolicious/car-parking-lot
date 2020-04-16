@@ -20,6 +20,13 @@ $router->group(['prefix' => 'space'], function () use ($router) {
     $router->get('list', 'SpaceController@list');
 });
 
+$router->group(['prefix' => 'config'], function () use ($router) {
+    $router->group(['prefix' => 'price'], function () use ($router) {
+        $router->post('create', 'PriceController@create');
+        $router->get('list', 'PriceController@list');
+    });
+});
+
 $router->post('check-in', 'ParkingController@checkin');
 $router->post('check-out', 'ParkingController@checkout');
 $router->get('list', 'ParkingController@list');

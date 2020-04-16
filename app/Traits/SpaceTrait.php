@@ -53,7 +53,8 @@ trait SpaceTrait
 
     public function findOneSpaceByStatus($status){
         $space = FileHelper::getFile(storage_path(FileHelper::SPACE_FILE_PATH), true);
-        $space = collect($space)->firstWhere('status', $status);
+        $space = collect($space)->sortBy('number');
+        $space = $space->firstWhere('status', $status);
 
         return $space;
     }
