@@ -129,6 +129,10 @@ class ParkingController extends Controller
             if (isset($params['color']) && !empty($params['color'])) {
                 $result = $result->where('color', $params['color']);
             }
+
+            if (isset($params['status']) && !empty($params['status'])) {
+                $result = $result->where('status', $params['status']);
+            }
             
         }
         catch (Exception $ex)
