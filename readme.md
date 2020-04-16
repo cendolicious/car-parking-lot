@@ -1,5 +1,6 @@
 
 # Car Parking Lot 
+Car Parking Lot Management App for OCA Recruitment Test purpose, this app built with Lumen PHP Framework and .json file based. Simply go to storage/app to access all of the app data.
 
 ## How To Run
 
