@@ -11,6 +11,7 @@ use App\Http\Helpers\Constant;
 use Illuminate\Validation\Rule;
 use App\Transformers\ParkingTransformer;
 use Illuminate\Support\Facades\Validator;
+use App\Transformers\ParkingReportTransformer;
 
 class ParkingController extends Controller
 {
@@ -108,6 +109,38 @@ class ParkingController extends Controller
         return [
             'error' => false,
             'message' => 'Successfully registered out parking space.',
+            'data' => $result
+        ];
+    }
+
+    public function report(Request $request){
+        $params = $request->all();
+        $result = array();
+
+        try
+        {
+            $result = $this->findManyParking();
+            $result = collect($result)->sortBy('status')->sortBy('number')->sortBy('block');
+
+            if (isset($params['type']) && !empty($params['type'])) {
+                $result = $result->where('type', $params['type']);
+            }
+
+            if (isset($params['color']) && !empty($params['color'])) {
+                $result = $result->where('color', $params['color']);
+            }
+            
+        }
+        catch (Exception $ex)
+        {
+            return ['error' => true, 'message' => $ex->getMessage()];
+        }
+
+        $result = (new ParkingReportTransformer())->transform($result);
+
+        return [
+            'error' => false,
+            'message' => 'Successfully get parking list.',
             'data' => $result
         ];
     }
